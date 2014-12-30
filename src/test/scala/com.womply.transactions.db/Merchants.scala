@@ -1,4 +1,4 @@
-package com.bantamlabs.transactions.db
+package com.womply.transactions.db
 
 import com.websudos.phantom.Implicits._
 

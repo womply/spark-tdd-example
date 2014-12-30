@@ -1,4 +1,4 @@
-package com.bantamlabs.transactions.util
+package com.womply.transactions.util
 
 import scala.math._
 

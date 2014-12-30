@@ -1,7 +1,7 @@
-package com.bantamlabs.transactions.spark
+package com.womply.transactions.spark
 
-import com.bantamlabs.transactions.db._
-import com.bantamlabs.transactions.db.{Transactions, Transaction}
+import com.womply.transactions.db._
+import com.womply.transactions.db.{Transactions, Transaction}
 import com.datastax.driver.core.{Cluster, Session}
 import com.websudos.phantom.testing._
 import org.apache.spark.SparkContext
@@ -11,7 +11,7 @@ import org.scalatest.fixture
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 import scala.util.Random
-import com.bantamlabs.transactions.util.Distance._
+import com.womply.transactions.util.Distance._
 
 class PopulateRankingsJobSpec extends fixture.FlatSpec
     with TestZookeeperConnector with CassandraTest with BeforeAndAfter {
