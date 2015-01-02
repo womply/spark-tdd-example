@@ -9,11 +9,12 @@ libraryDependencies ++= {
   val phantomVersion = "1.4.0"
 
   Seq(
-    "org.apache.spark"       %% "spark-core"        % "1.2.0" % "test",
-    "com.typesafe"            % "config"            % "1.2.1",
-    "com.websudos"           %% "phantom-dsl"       % phantomVersion % "test",
-    "com.websudos"           %% "phantom-testing"   % phantomVersion % "test",
-    "com.websudos"           %% "phantom-zookeeper" % phantomVersion % "test"
+    "org.apache.spark"       %% "spark-core"                % "1.2.0" % "provided" intransitive(),
+    "com.datastax.spark"     %% "spark-cassandra-connector" % "1.1.1",
+    "com.typesafe"            % "config"                    % "1.2.1",
+    "com.websudos"           %% "phantom-dsl"               % phantomVersion % "test",
+    "com.websudos"           %% "phantom-testing"           % phantomVersion % "test",
+    "com.websudos"           %% "phantom-zookeeper"         % phantomVersion % "test"
   )
 }
 

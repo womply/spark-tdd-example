@@ -4,7 +4,7 @@ import com.womply.transactions.db._
 import com.womply.transactions.db.{Transactions, Transaction}
 import com.datastax.driver.core.{Cluster, Session}
 import com.websudos.phantom.testing._
-import org.apache.spark.SparkContext
+import org.apache.spark.{SparkContext, SparkConf}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest.BeforeAndAfter
 import org.scalatest.fixture
@@ -19,7 +19,8 @@ class PopulateRankingsJobSpec extends fixture.FlatSpec
   type FixtureParam = SparkContext
 
   def withFixture(test: OneArgTest) = {
-    val sparkContext = new SparkContext("local", "scalatest")
+    val sparkConf = new SparkConf(true).set("spark.cassandra.connection.host", "127.0.0.1")
+    val sparkContext = new SparkContext("local", "scalatest", sparkConf)
 
     try test(sparkContext)
     finally sparkContext.stop
@@ -99,7 +100,7 @@ class PopulateRankingsJobSpec extends fixture.FlatSpec
       })
       .toMap
 
-    // TODO Run Spark job
+    PopulateRankingsJob.run(sparkContext)
 
     val rankingsSelectFuture = Rankings.select.fetch
     whenReady(rankingsSelectFuture) { results =>
