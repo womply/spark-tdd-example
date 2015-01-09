@@ -10,19 +10,16 @@ libraryDependencies ++= {
 
   Seq(
     "org.apache.spark"       %% "spark-core"        % "1.0.0"        % "provided",
-    "com.typesafe"            % "config"            % "1.2.1",
+    "com.datastax.spark" %% "spark-cassandra-connector" % "1.1.1",
+    "org.apache.cassandra"    % "cassandra-all"     % "2.1.2"        % "test",
     "com.websudos"           %% "phantom-dsl"       % phantomVersion % "test",
     "com.websudos"           %% "phantom-testing"   % phantomVersion % "test",
     "com.websudos"           %% "phantom-zookeeper" % phantomVersion % "test",
-    "org.apache.cassandra"    % "cassandra-all"     % "2.0.8"        % "test" force(),
-    "org.apache.zookeeper"    % "zookeeper"         % "3.3.4"        % "test"
+    "org.apache.zookeeper"    % "zookeeper"         % "3.3.4"        % "test",
+    "com.google.guava"        % "guava"             % "16.0",
+    "log4j" % "log4j" % "1.2.15" exclude("com.sun.jdmk", "jmxtools") exclude("com.sun.jmx", "jmxri")
   )
 }
-
-ivyXML :=
-  <dependencies>
-    <exclude org="org.slf4j" name="slf4j-jdk14" />
-  </dependencies>
 
 dependencyOverrides += "org.apache.zookeeper" % "zookeeper" % "3.3.4"
 
