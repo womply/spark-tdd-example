@@ -4,15 +4,15 @@ import com.websudos.phantom.Implicits._
 
 case class Merchant(
   id: String,
-  name: String,
-  latitude: Double,
-  longitude: Double)
+  name: Option[String],
+  latitude: Option[Double],
+  longitude: Option[Double])
 
 sealed class Merchants extends CassandraTable[Merchants, Merchant] {
   object id extends StringColumn(this) with PartitionKey[String]
-  object name extends StringColumn(this)
-  object latitude extends DoubleColumn(this)
-  object longitude extends DoubleColumn(this)
+  object name extends OptionalStringColumn(this)
+  object latitude extends OptionalDoubleColumn(this)
+  object longitude extends OptionalDoubleColumn(this)
 
   override def fromRow(r: Row) =
     Merchant(id(r), name(r), latitude(r), longitude(r))

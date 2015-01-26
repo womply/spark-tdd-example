@@ -3,6 +3,6 @@ package com.womply.transactions.db
 import com.websudos.phantom.zookeeper.SimpleCassandraConnector
 
 trait CassandraConnector extends SimpleCassandraConnector {
-  val keySpace = "transaction_example"
+  override val keySpace = "spark_tdd_example"
 }
 

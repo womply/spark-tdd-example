@@ -19,7 +19,10 @@ class PopulateRankingsJobSpec extends fixture.FlatSpec
   type FixtureParam = SparkContext
 
   def withFixture(test: OneArgTest) = {
-    val sparkConf = new SparkConf(true).set("spark.cassandra.connection.host", "127.0.0.1")
+    val sparkConf = new SparkConf(true)
+      .set("spark.cassandra.connection.host", "127.0.0.1")
+      .set("spark.cassandra.connection.native.port", "9142")
+
     val sparkContext = new SparkContext("local", "scalatest", sparkConf)
 
     try test(sparkContext)
@@ -40,10 +43,10 @@ class PopulateRankingsJobSpec extends fixture.FlatSpec
 
   it should "rank each merchant's closest two other merchants by total revenue grouped by day" in { sparkContext =>
     val merchants = List(
-      Merchant("303030303", "Womply Cafe - SF", 37.778574, -122.391721),
-      Merchant("505050505", "Womply Cafe - Madison", 43.075746, -89.383367),
-      Merchant("606060606", "Womply Cafe - DC", 38.890000, -77.087565),
-      Merchant("909090909", "Womply Cafe - London", 51.554906, -0.258154)
+      Merchant("303030303", Option("Womply Cafe - SF"), Option(37.778574), Option(-122.391721)),
+      Merchant("505050505", Option("Womply Cafe - Madison"), Option(43.075746), Option(-89.383367)),
+      Merchant("606060606", Option("Womply Cafe - DC"), Option(38.890000), Option(-77.087565)),
+      Merchant("909090909", Option("Womply Cafe - London"), Option(51.554906), Option(-0.258154))
     )
     val insertMerchantFutures = merchants.map(m =>  Merchants.insertMerchant(m).future)
 
@@ -83,8 +86,8 @@ class PopulateRankingsJobSpec extends fixture.FlatSpec
         val closestMerchants = merchants
           .collect({
             case merchant if merchant != targetMerchant => {
-              val distance = distanceInMiles(targetMerchant.latitude, targetMerchant.longitude,
-                merchant.latitude, merchant.longitude)
+              val distance = distanceInMiles(targetMerchant.latitude.get,
+                targetMerchant.longitude.get, merchant.latitude.get, merchant.longitude.get)
 
               (merchant, distance)
             }

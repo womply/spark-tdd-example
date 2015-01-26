@@ -7,6 +7,7 @@ case class Transaction(merchantID: String, time: DateTime, amount: BigDecimal)
 
 sealed class Transactions extends CassandraTable[Transactions, Transaction] {
   object merchant_id extends StringColumn(this) with PartitionKey[String]
+  // TODO Need to refactor to a TimeUUID
   object time extends DateTimeColumn(this) with PrimaryKey[DateTime]
   object amount extends BigDecimalColumn(this)
 
